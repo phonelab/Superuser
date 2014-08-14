@@ -868,6 +868,11 @@ int su_main(int argc, char *argv[], int need_client) {
         allow(&ctx);
     }
 
+    if (ctx.from.uid == AID_SYSTEM) {
+        LOGD("Allowing system.");
+        allow(&ctx);
+    }
+
     // deny if this is a non owner request and owner mode only
     if (ctx.user.multiuser_mode == MULTIUSER_MODE_OWNER_ONLY && ctx.user.android_user_id != 0) {
         deny(&ctx);
