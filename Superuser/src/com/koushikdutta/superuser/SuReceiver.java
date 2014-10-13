@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
+import android.os.Process;
 
 import com.koushikdutta.superuser.db.LogEntry;
 import com.koushikdutta.superuser.db.SuperuserDatabaseHelper;
@@ -41,6 +42,11 @@ public class SuReceiver extends BroadcastReceiver {
         int uid = intent.getIntExtra("uid", -1);
         if (uid == -1)
             return;
+        // Jinghao: Oct 10, 2014
+        // Do not show notifications for system process.
+        if (uid == Process.SYSTEM_UID) {
+            return;
+        }
         int desiredUid = intent.getIntExtra("desired_uid", -1);
         if (desiredUid == -1)
             return;
